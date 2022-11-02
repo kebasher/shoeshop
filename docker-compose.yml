@@ -1,0 +1,32 @@
+services:
+  web:
+    container_name: nodeappcont
+    build: .
+    restart: always
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+    environment:
+      DB_HOST: mysqldb
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: 12345678
+      DB_NAME: shoes_innodb
+      SERVER_PORT: 3000
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image: mysql:8.0
+    container_name: shoesdbcont
+    restart: always
+    volumes: 
+      - ./shoes.sql:/docker-entrypoint-initdb.d/shoes.sql  
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+

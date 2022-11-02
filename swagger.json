@@ -1,0 +1,354 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Shoes-shop CRUD",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+
+  "paths": {
+    "/shoes": {
+      "get": {
+        "summary": "Returns shoes catalogue",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/shoes/{id}": {
+      "get": {
+        "summary": "Returns one shoe info",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "ID not defined"
+          }
+        }
+      }
+    },
+
+    "/login": {
+      "post": {
+        "summary": "User log in",
+        "parameters": [
+          {
+            "name": "admin entry as default",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/loginform"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Data not defined"
+          },
+          "401": {
+            "description": "Username or password incorrect"
+          }
+        }
+      }
+    },
+
+    "/user": {
+      "get": {
+        "summary": "Returns user info",
+        "produces": ["application/json"],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "ID not defined"
+          },
+          "403": {
+            "description": "something went wrong"
+          }
+        }
+      }
+    },
+
+    "/users": {
+      "get": {
+        "summary": "Returns users info for admins",
+        "produces": ["application/json"],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "ID not defined"
+          },
+          "403": {
+            "description": "something went wrong"
+          }
+        }
+      }
+    },
+
+    "/cart": {
+      "get": {
+        "summary": "Returns user's cart",
+        "produces": ["application/json"],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "something went wrong"
+          }
+        }
+      }
+    },
+
+    "/orders": {
+      "get": {
+        "summary": "Returns user's orders",
+        "produces": ["application/json"],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "something went wrong"
+          }
+        }
+      }
+    },
+
+    "/addshoe/{id}": {
+      "post": {
+        "summary": "Adds chosen shoe to cart",
+        "produces": ["application/json"],
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Create cart first"
+          }
+        }
+      }
+    },
+
+    "/removeshoe/{id}": {
+      "delete": {
+        "summary": "Removers chosen shoe from cart",
+        "produces": ["application/json"],
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "something went wrong"
+          }
+        }
+      }
+    },
+
+    "/confirm": {
+      "put": {
+        "summary": "Confirms user's confirmed order",
+        "produces": ["application/json"],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "something went wrong"
+          }
+        }
+      }
+    },
+
+    "/cancel": {
+      "put": {
+        "summary": "Cancels user's confirmed order",
+        "produces": ["application/json"],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "something went wrong"
+          }
+        }
+      }
+    },
+
+    "/useradd": {
+      "post": {
+        "summary": "adding new user",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "userform",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/userform"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Data not defined"
+          },
+          "401": {
+            "description": "Username or password incorrect"
+          }
+        }
+      }
+    },
+
+    "/userupd/{id}": {
+      "put": {
+        "summary": "updating user info",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userform",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/userform"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "something went wrong"
+          }
+        }
+      }
+    },
+
+    "/userdel/{id}": {
+      "delete": {
+        "summary": "deleting user",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "something went wrong"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "loginform": {
+      "required": ["phone", "password"],
+      "properties": {
+        "phone": {
+          "type": "integer",
+          "default": "1206548792"
+        },
+        "password": {
+          "type": "string",
+          "default": "admin"
+        }
+      }
+    },
+
+    "userform": {
+      "required": ["fullname", "birthday", "password", "phone", "size"],
+      "properties": {
+        "fullname": {
+          "type": "string"
+        },
+        "birthday": {
+          "type": "string",
+          "default": "2022-02-02"
+        },
+        "phone": {
+          "type": "integer"
+        },
+        "password": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer",
+          "default": "20.5"
+        }
+      }
+    }
+  }
+}
